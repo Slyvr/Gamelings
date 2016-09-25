@@ -29,6 +29,7 @@ public class Ent {
 	private String type;
 	private Rectangle collisionBox;
 	private Rectangle posBox;
+	private Rectangle nextPosBox;
 	private int centerX;
 	private int centerY;
 	private Font font;
@@ -40,6 +41,7 @@ public class Ent {
 	private int scaleY;
 	private float animSpeed;
 	private boolean display;
+	private boolean selected;
 	private State state;
 	private enum State {
 		HOVER, CLICKED, JUMP, STAND, INJURED, DEAD
@@ -51,8 +53,10 @@ public class Ent {
 		scaleY=1;
 		animSpeed=1;
 		this.posBox = new Rectangle();
+		this.nextPosBox = new Rectangle();
 		this.collisionBox = new Rectangle();
 		this.display = true;
+		this.selected = false;
 	}
 	
 	public void render(SpriteBatch batch){
@@ -112,6 +116,12 @@ public class Ent {
 	}
 	public void setPosBox(Rectangle posBox) {
 		this.posBox = posBox;
+	}
+	public Rectangle getNextPosBox() {
+		return nextPosBox;
+	}
+	public void setNextPosBox(Rectangle nextPosBox) {
+		this.nextPosBox = nextPosBox;
 	}
 	public int getCenterX() {
 		return centerX;
@@ -178,6 +188,12 @@ public class Ent {
 	}
 	public void setDisplay(boolean display) {
 		this.display = display;
+	}
+	public boolean isSelected() {
+		return selected;
+	}
+	public void setSelected(boolean selected) {
+		this.selected = selected;
 	}
 	public State getState() {
 		return state;

@@ -27,12 +27,32 @@ public class OptionsMenu extends Menu{
 				0+15,
 				btnBack.getImg().getTex().getWidth(),
 				btnBack.getImg().getTex().getHeight()));
+		btnBack.setSelected(true);
 		ents.add(btnBack);
 		
 		this.setEnts(ents);
 	}
 	
-	public void update (float stateTime){
-		
+	public void update(float stateTime){
+		updateButtons();
+		updateButtonHover();
+	}
+	
+	public void updateButtons(){
+		if (Gdx.input.justTouched()){
+			Rectangle mousePos = new Rectangle(Gdx.input.getX(),Gdx.graphics.getHeight()-Gdx.input.getY(),1,1);
+			for(Ent e : this.getEnts()){
+				Rectangle ePos = new Rectangle(e.getPosBox());
+				ePos.setX(ePos.getX());
+				ePos.setY(ePos.getY());
+				if (e.getName().contains("btn")){
+					if (mousePos.overlaps(ePos)){
+						if (e.getName().equals("btnBack")){
+							MyGame.getGlobal().changeMenu("previous");
+						}
+					}
+				}
+			}
+		}
 	}
 }

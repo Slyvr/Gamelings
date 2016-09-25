@@ -3,8 +3,11 @@ package com.slyvr.gamelings.load;
 import java.util.ArrayList;
 
 import com.slyvr.gamelings.objects.Menu;
+import com.slyvr.gamelings.objects.menus.GameSelectMenu;
 import com.slyvr.gamelings.objects.menus.MainMenu;
 import com.slyvr.gamelings.objects.menus.OptionsMenu;
+import com.slyvr.gamelings.objects.menus.PlatformBattleMenu;
+import com.slyvr.gamelings.objects.menus.PlayerSetupMenu;
 import com.slyvr.gamelings.objects.menus.SplashMenu;
 
 /**
@@ -21,6 +24,9 @@ public class LoadMenus {
 		menus.add(new SplashMenu());
 		menus.add(new MainMenu());
 		menus.add(new OptionsMenu());
+		menus.add(new GameSelectMenu());
+		menus.add(new PlayerSetupMenu());
+		menus.add(new PlatformBattleMenu());
 		
 		return menus;
 	}

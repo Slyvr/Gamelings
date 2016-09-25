@@ -22,7 +22,15 @@ public class LoadImgs {
 		imgs.add(new Img(new Texture(Gdx.files.internal("data/logos/logoSlyvrOnline.png")),"logoSlyvrOnline"));
 		imgs.add(new Img(new Texture(Gdx.files.internal("data/logos/logoSlyvrOnlineCredits.png")),"logoSlyvrOnlineCredits"));
 		
+		//MENU ITEMS
+		imgs.add(new Img(new Texture(Gdx.files.internal("data/menuitems/platformbattle_select.png")),"platformbattle_select"));
+		imgs.add(new Img(new Texture(Gdx.files.internal("data/menuitems/tankrace_select.png")),"tankrace_select"));
+		imgs.add(new Img(new Texture(Gdx.files.internal("data/menuitems/soccer_select.png")),"soccer_select"));
+		imgs.add(new Img(new Texture(Gdx.files.internal("data/menuitems/morecomingsoon_select.png")),"morecomingsoon_select"));
+		imgs.add(new Img(new Texture(Gdx.files.internal("data/imgs/whitecover.png")),"whitecover"));
+		
 		//BUTTONS
+		imgs.add(new Img(new Texture(Gdx.files.internal("data/btns/btnGameSelect.png")),"btnGameSelect"));
 		imgs.add(new Img(new Texture(Gdx.files.internal("data/btns/btnLoad.png")),"btnLoad"));
 		imgs.add(new Img(new Texture(Gdx.files.internal("data/btns/btnLoad_hover.png")),"btnLoad_hover"));
 		imgs.add(new Img(new Texture(Gdx.files.internal("data/btns/btnNewGame.png")),"btnNewGame"));

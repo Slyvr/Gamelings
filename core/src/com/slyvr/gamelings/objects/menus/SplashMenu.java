@@ -39,7 +39,7 @@ public class SplashMenu extends Menu{
 		if (startMillis==0) startMillis = System.currentTimeMillis();
 		else{
 			if (startMillis+2000<=System.currentTimeMillis()){
-				MyGame.getGlobal().setCurrentMenu(MyGame.getGlobal().getMenuByName("main"));
+				MyGame.getGlobal().changeMenu("main");
 			}
 		}
 	}

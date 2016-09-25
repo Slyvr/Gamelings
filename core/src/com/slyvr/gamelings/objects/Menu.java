@@ -20,6 +20,9 @@ public class Menu {
 	private ArrayList<Ent> ents;
 	private ArrayList<Menu> subMenus;
 	private Menu currentSubMenu;
+	private boolean animating;
+	private long endAnimTime;
+	private Ent currentAnimation;
 	
 	public Menu(){
 		
@@ -38,6 +41,8 @@ public class Menu {
 	public static void updateButtonHover(){
 		Rectangle mousePos = new Rectangle(Gdx.input.getX(),Gdx.graphics.getHeight()-Gdx.input.getY(),1,1);
 		
+		Ent prevHovered = null;
+		
 		for(Ent e : MyGame.getGlobal().getCurrentMenu().getEnts()){
 			Rectangle ePos = new Rectangle(e.getPosBox());
 			ePos.setX(ePos.getX());
@@ -46,29 +51,67 @@ public class Menu {
 				if (e.getImg() != null && e.getImg().getName().contains("btn") && !e.getImg().getName().contains("hover")){
 					Img hoverImg = MyGame.getGlobal().getImgByName(e.getImg().getName()+"_hover");
 					if (hoverImg != null) e.setImg(hoverImg);
+					e.setSelected(true);
 				}
 			}
 			else if (e.getImg() != null && e.getImg().getName().contains("hover")){
 				Img nonHoverImg = MyGame.getGlobal().getImgByName(e.getImg().getName().replace("_hover", ""));
 				if (nonHoverImg != null) e.setImg(nonHoverImg);
+				e.setSelected(false);
+				prevHovered = e;
 			}
 		}
 		
-		if (MyGame.getGlobal().getCurrentMenu().getSubMenus() != null)
-		for(Menu menu : MyGame.getGlobal().getCurrentMenu().getSubMenus()){
-			for(Ent e : menu.getEnts()){
-				Rectangle ePos = new Rectangle(e.getPosBox());
-				ePos.setX(ePos.getX());
-				ePos.setY(ePos.getY());
-				if (mousePos.overlaps(ePos)){
-					if (e.getImg() != null && e.getImg().getName().contains("btn") && !e.getImg().getName().contains("hover")){
-						Img hoverImg = MyGame.getGlobal().getImgByName(e.getImg().getName()+"_hover");
-						if (hoverImg != null) e.setImg(hoverImg);
+		boolean hasOneHovered = false;
+		for(Ent e : MyGame.getGlobal().getCurrentMenu().getEnts()){
+			if (e.getImg() != null && e.getImg().getName().contains("hover")){
+				hasOneHovered = true;
+				break;
+			}
+		}
+		
+		if (!hasOneHovered && prevHovered != null){
+			Img hoverImg = MyGame.getGlobal().getImgByName(prevHovered.getImg().getName()+"_hover");
+			if (hoverImg != null) prevHovered.setImg(hoverImg);
+			prevHovered.setSelected(true);
+		}
+		
+		if (MyGame.getGlobal().getCurrentMenu().getSubMenus() != null){
+			for(Menu menu : MyGame.getGlobal().getCurrentMenu().getSubMenus()){
+				
+				prevHovered = null;
+				
+				for(Ent e : menu.getEnts()){
+					Rectangle ePos = new Rectangle(e.getPosBox());
+					ePos.setX(ePos.getX());
+					ePos.setY(ePos.getY());
+					if (mousePos.overlaps(ePos)){
+						if (e.getImg() != null && e.getImg().getName().contains("btn") && !e.getImg().getName().contains("hover")){
+							Img hoverImg = MyGame.getGlobal().getImgByName(e.getImg().getName()+"_hover");
+							if (hoverImg != null) e.setImg(hoverImg);
+							e.setSelected(true);
+						}
+					}
+					else if (e.getImg() != null && e.getImg().getName().contains("btn") && e.getImg().getName().contains("hover")){
+						Img nonHoverImg = MyGame.getGlobal().getImgByName(e.getImg().getName().replace("_hover", ""));
+						if (nonHoverImg != null) e.setImg(nonHoverImg);
+						e.setSelected(false);
+						prevHovered = e;
 					}
 				}
-				else if (e.getImg() != null && e.getImg().getName().contains("btn") && e.getImg().getName().contains("hover")){
-					Img nonHoverImg = MyGame.getGlobal().getImgByName(e.getImg().getName().replace("_hover", ""));
-					if (nonHoverImg != null) e.setImg(nonHoverImg);
+				
+				hasOneHovered = false;
+				for(Ent e : menu.getEnts()){
+					if (e.getImg() != null && e.getImg().getName().contains("hover")){
+						hasOneHovered = true;
+						break;
+					}
+				}
+				
+				if (!hasOneHovered && prevHovered != null){
+					Img hoverImg = MyGame.getGlobal().getImgByName(prevHovered.getImg().getName()+"_hover");
+					if (hoverImg != null) prevHovered.setImg(hoverImg);
+					prevHovered.setSelected(true);
 				}
 			}
 		}
@@ -110,6 +153,25 @@ public class Menu {
 	public void setCurrentSubMenu(Menu currentSubMenu){
 		this.currentSubMenu=currentSubMenu;
 	}
+	public boolean isAnimating() {
+		return animating;
+	}
+	public void setAnimating(boolean animating) {
+		this.animating = animating;
+	}
+	public long getEndAnimTime() {
+		return endAnimTime;
+	}
+	public void setEndAnimTime(long endAnimTime) {
+		this.endAnimTime = endAnimTime;
+	}
+	public Ent getCurrentAnimation() {
+		return currentAnimation;
+	}
+	public void setCurrentAnimation(Ent currentAnimation) {
+		this.currentAnimation = currentAnimation;
+	}
+
 	public void setCurrentSubMenuByName(String menuName){
 		for(Menu subMenu : subMenus){
 			if (menuName.equals(subMenu.getName())){
@@ -127,6 +189,14 @@ public class Menu {
 	public Menu getSubMenuByName(String name){
 		for(Menu m : subMenus)
 			if (m.getName().equals(name)) return m;
+		return null;
+	}
+	public Ent getSelectedEnt(){
+		for(Ent e : ents){
+			if (e.isSelected()){
+				return e;
+			}
+		}
 		return null;
 	}
 	

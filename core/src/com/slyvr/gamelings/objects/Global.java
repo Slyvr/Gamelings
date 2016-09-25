@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.slyvr.gamelings.load.LoadImgs;
 import com.slyvr.gamelings.load.LoadMenus;
+import com.slyvr.gamelings.objects.controllers.GameController;
 
 /**
  * This class is the main source for everything to be loaded and where resources are pulled out.
@@ -28,6 +29,10 @@ public class Global {
 	private ArrayList<Font> fonts;
 	private ArrayList<Menu> menus;
 	
+	private ArrayList<GameController> controllers;
+	private ArrayList<Player> players;
+	
+	private Menu previousMenu;
 	private Menu currentMenu;
 	private AudioTrack currentTrack;
 	private GameInstance game;
@@ -69,6 +74,18 @@ public class Global {
 		return null;
 	}
 	
+	public void changeMenu(String name){
+		if ("previous".equals(name)){
+			Menu menu = this.previousMenu;
+			this.setPreviousMenu(this.getCurrentMenu());
+			this.setCurrentMenu(menu);
+		}
+		else{
+			this.setPreviousMenu(this.getCurrentMenu());
+			this.setCurrentMenu(this.getMenuByName(name));
+		}
+	}
+	
 	public ArrayList<Img> getImgs() {
 		return imgs;
 	}
@@ -92,6 +109,18 @@ public class Global {
 	}
 	public void setMenus(ArrayList<Menu> menus) {
 		this.menus = menus;
+	}
+	public ArrayList<GameController> getControllers() {
+		return controllers;
+	}
+	public void setControllers(ArrayList<GameController> controllers) {
+		this.controllers = controllers;
+	}
+	public ArrayList<Player> getPlayers() {
+		return players;
+	}
+	public void setPlayers(ArrayList<Player> players) {
+		this.players = players;
 	}
 	public int getDefaultScreenWidth() {
 		return defaultScreenWidth;
@@ -125,6 +154,12 @@ public class Global {
 	}
 	public void setBatch(SpriteBatch batch) {
 		this.batch = batch;
+	}
+	public Menu getPreviousMenu() {
+		return previousMenu;
+	}
+	public void setPreviousMenu(Menu previousMenu) {
+		this.previousMenu = previousMenu;
 	}
 	public Menu getCurrentMenu() {
 		return currentMenu;
